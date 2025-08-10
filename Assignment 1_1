@@ -1,0 +1,291 @@
+// Use of Singly Linked List for implementation of Contact Management System
+#include <iostream>
+using namespace std;
+
+struct myNode
+{
+    string number;
+    string name;
+    string emailID;
+    myNode *next;
+};
+
+class myList
+{
+    myNode *head;
+
+public:
+    myList();
+    myNode *getNode();
+    void create();
+    void insertAtHead();
+    void insertInBetween();
+    void insertAtTail();
+    void display();
+    void search();
+    void reverse();
+    void deleteNode();
+};
+
+myList::myList()
+{
+    head = NULL;
+}
+
+myNode *myList::getNode()
+{
+    myNode *t = new myNode;
+
+    // Phone number validation
+    while (true)
+    {
+        cout << "Enter phone number (10 digits): ";
+        cin >> t->number;
+        bool valid = t->number.size() == 10;
+        for (char c : t->number)
+            if (!isdigit(c))
+                valid = false;
+        if (valid)
+            break;
+        cout << "Invalid phone number.\n";
+    }
+    cin.ignore();
+
+    // Name validation
+    while (true)
+    {
+        cout << "Enter name: ";
+        getline(cin, t->name);
+        bool valid = !t->name.empty();
+        for (char c : t->name)
+            if (!isalpha(c) && c != ' ')
+                valid = false;
+        if (valid)
+            break;
+        cout << "Invalid name. Only alphabets and spaces allowed.\n";
+    }
+
+    // Email validation
+    while (true)
+    {
+        cout << "Enter email ID: ";
+        getline(cin, t->emailID);
+        int at = t->emailID.find('@'), dot = t->emailID.find('.', at);
+        if (at > 0 && dot > at + 1 && dot < (int)t->emailID.size() - 1)
+            break;
+        cout << "Invalid email. Must contain '@' and '.' in proper format.\n";
+    }
+
+    t->next = NULL;
+    return t;
+}
+
+void myList::create()
+{
+    int n;
+    cout << "Enter number of nodes to be created: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+    {
+        myNode *t = getNode();
+        if (head == NULL)
+            head = t;
+        else
+        {
+            myNode *p = head;
+            while (p->next != NULL)
+                p = p->next;
+            p->next = t;
+        }
+    }
+}
+
+void myList::insertAtHead()
+{
+    myNode *t = getNode();
+    t->next = head;
+    head = t;
+}
+
+void myList::insertInBetween()
+{
+    string afterNum;
+    cout << "Insert after which number: ";
+    cin >> afterNum;
+
+    myNode *t = getNode();
+    myNode *p = head;
+
+    while (p != NULL && p->number != afterNum)
+        p = p->next;
+
+    if (p == NULL)
+    {
+        cout << "Number not found.\n";
+        delete t;
+        return;
+    }
+
+    t->next = p->next;
+    p->next = t;
+}
+
+void myList::insertAtTail()
+{
+    myNode *t = getNode();
+
+    if (head == NULL)
+        head = t;
+    else
+    {
+        myNode *p = head;
+        while (p->next != NULL)
+            p = p->next;
+        p->next = t;
+    }
+}
+
+void myList::display()
+{
+    if (head == NULL)
+    {
+        cout << "List is empty.\n";
+        return;
+    }
+
+    cout << "\n--- Contact List ---\n";
+    myNode *p = head;
+    while (p != NULL)
+    {
+        cout << "Number : " << p->number << "\n";
+        cout << "Name   : " << p->name << "\n";
+        cout << "Email  : " << p->emailID << "\n\n";
+        p = p->next;
+    }
+}
+
+void myList::search()
+{
+    string target;
+    cout << "Enter number to be searched: ";
+    cin >> target;
+
+    myNode *p = head;
+    while (p != NULL)
+    {
+        if (p->number == target)
+        {
+            cout << "Contact found:\n";
+            cout << "Name: " << p->name << "\nEmail: " << p->emailID << "\n";
+            return;
+        }
+        p = p->next;
+    }
+    cout << "Data not found\n";
+}
+
+void myList::reverse()
+{
+    if (head == NULL || head->next == NULL)
+        return;
+
+    myNode *prev = NULL, *curr = head, *next = NULL;
+    while (curr != NULL)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    head = prev;
+    cout << "List reversed.\n";
+    display();
+}
+
+void myList::deleteNode()
+{
+    string d;
+    cout << "Enter contact number to delete: ";
+    cin >> d;
+
+    myNode *p = head, *prev = NULL;
+
+    while (p != NULL && p->number != d)
+    {
+        prev = p;
+        p = p->next;
+    }
+
+    if (p == NULL)
+    {
+        cout << "Data not found\n";
+        return;
+    }
+
+    if (p == head)
+        head = head->next;
+    else
+        prev->next = p->next;
+
+    delete p;
+    cout << "Successfully deleted\n";
+}
+
+int main()
+{
+    myList l;
+    int choice;
+
+    do
+    {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Create list\n";
+        cout << "2. Insert at head\n";
+        cout << "3. Insert in between\n";
+        cout << "4. Insert at tail\n";
+        cout << "5. Display\n";
+        cout << "6. Search\n";
+        cout << "7. Reverse\n";
+        cout << "8. Delete node\n";
+        cout << "9. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            l.create();
+            break;
+        case 2:
+            l.insertAtHead();
+            break;
+        case 3:
+            l.insertInBetween();
+            break;
+        case 4:
+            l.insertAtTail();
+            break;
+        case 5:
+            l.display();
+            break;
+        case 6:
+            l.search();
+            break;
+        case 7:
+            l.reverse();
+            break;
+        case 8:
+            l.deleteNode();
+            break;
+        case 9:
+            cout << "Exited the program.\n";
+            break;
+        default:
+            cout << "Enter a valid choice.\n";
+        }
+
+    } while (choice != 9);
+
+    return 0;
+}
