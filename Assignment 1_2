@@ -18,6 +18,7 @@ class myList
 
 public:
     myList();
+    ~myList();
     myNode *getNode();
     void create();
     void insertAtHead();
@@ -28,12 +29,23 @@ public:
     void reverse();
     void deleteNode();
 };
-
+// Constructor
 myList::myList()
 {
     head = NULL;
 }
-
+// Destructor
+myList::~myList()
+{
+    myNode *p;
+    while (head != NULL)
+    {
+        p = head->next;
+        delete head;
+        head = p;
+    }
+}
+// Returns Node
 myNode *myList::getNode()
 {
     myNode *t = new myNode;
@@ -43,15 +55,15 @@ myNode *myList::getNode()
     {
         cout << "Enter phone number (10 digits): ";
         cin >> t->number;
-        bool valid = t->number.size() == 10;
+        bool correct = t->number.size() == 10;
         for (char c : t->number)
             if (!isdigit(c))
-                valid = false;
-        if (valid)
+                correct = false;
+        if (correct)
             break;
         cout << "Invalid phone number.\n";
     }
-    cin.ignore();
+    cin.ignore();  // Clear newline from input buffer
 
     // Name validation
     while (true)
@@ -67,27 +79,20 @@ myNode *myList::getNode()
         cout << "Invalid name. Only alphabets and spaces allowed.\n";
     }
 
-    // Email validation
-    while (true)
-    {
-        cout << "Enter email ID: ";
-        getline(cin, t->emailID);
-        int at = t->emailID.find('@'), dot = t->emailID.find('.', at);
-        if (at > 0 && dot > at + 1 && dot < (int)t->emailID.size() - 1)
-            break;
-        cout << "Invalid email. Must contain '@' and '.' in proper format.\n";
-    }
+    cout << "Enter email ID: ";
+    getline(cin, t->emailID);
 
     t->next = NULL;
     t->prev = NULL;
     return t;
 }
-
+// Create list
 void myList::create()
 {
     int n;
     cout << "Enter number of nodes to be created: ";
     cin >> n;
+    cin.ignore();  // Clear newline after reading n
 
     for (int i = 0; i < n; i++)
     {
@@ -104,7 +109,7 @@ void myList::create()
         }
     }
 }
-
+// Insert at head function
 void myList::insertAtHead()
 {
     myNode *t = getNode();
@@ -113,33 +118,37 @@ void myList::insertAtHead()
         head->prev = t;
     head = t;
 }
-
+// Insert in between function
 void myList::insertInBetween()
 {
-    string afterNum;
-    cout << "Insert after which number: ";
-    cin >> afterNum;
+    string afterName;
+    cout << "Insert after which name: ";
+    cin.ignore();              
+    getline(cin, afterName);   
 
-    myNode *t = getNode();
     myNode *p = head;
-
-    while (p != NULL && p->number != afterNum)
+    while (p != NULL && p->name != afterName)
         p = p->next;
 
     if (p == NULL)
     {
-        cout << "Number not found.\n";
-        delete t;
+        cout << "Name not found.\n";
         return;
     }
 
+    myNode *t = getNode();
     t->next = p->next;
     t->prev = p;
+
     if (p->next != NULL)
         p->next->prev = t;
+
     p->next = t;
+
+    cout << "Contact inserted after " << afterName << ".\n";
 }
 
+// Insert At tail function
 void myList::insertAtTail()
 {
     myNode *t = getNode();
@@ -155,7 +164,7 @@ void myList::insertAtTail()
         t->prev = p;
     }
 }
-
+// Display function
 void myList::display()
 {
     if (head == NULL)
@@ -174,20 +183,21 @@ void myList::display()
         p = p->next;
     }
 }
-
+// Search by name
 void myList::search()
 {
-    string target;
-    cout << "Enter number to be searched: ";
-    cin >> target;
+    string targetName;
+    cout << "Enter name to be searched: ";
+    cin.ignore(); // Clear newline before getline
+    getline(cin, targetName);
 
     myNode *p = head;
     while (p != NULL)
     {
-        if (p->number == target)
+        if (p->name == targetName)
         {
             cout << "Contact found:\n";
-            cout << "Name: " << p->name << "\nEmail: " << p->emailID << "\n";
+            cout << "Number: " << p->number << "\nEmail: " << p->emailID << "\n";
             return;
         }
         p = p->next;
@@ -195,6 +205,7 @@ void myList::search()
     cout << "Data not found\n";
 }
 
+// Reverse function
 void myList::reverse()
 {
     if (head == NULL || head->next == NULL)
@@ -214,7 +225,7 @@ void myList::reverse()
     cout << "List reversed.\n";
     display();
 }
-
+// Delete Node function
 void myList::deleteNode()
 {
     string d;
@@ -249,55 +260,53 @@ int main()
     myList l;
     int choice;
 
+    l.create();
+
     do
     {
         cout << "\n--- MENU ---\n";
-        cout << "1. Create list\n";
-        cout << "2. Insert at head\n";
-        cout << "3. Insert in between\n";
-        cout << "4. Insert at tail\n";
-        cout << "5. Display\n";
-        cout << "6. Search\n";
-        cout << "7. Reverse\n";
-        cout << "8. Delete node\n";
-        cout << "9. Exit\n";
+        cout << "1. Insert at head\n";
+        cout << "2. Insert in between\n";
+        cout << "3. Insert at tail\n";
+        cout << "4. Display\n";
+        cout << "5. Search\n";
+        cout << "6. Reverse\n";
+        cout << "7. Delete node\n";
+        cout << "8. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
         switch (choice)
         {
         case 1:
-            l.create();
-            break;
-        case 2:
             l.insertAtHead();
             break;
-        case 3:
+        case 2:
             l.insertInBetween();
             break;
-        case 4:
+        case 3:
             l.insertAtTail();
             break;
-        case 5:
+        case 4:
             l.display();
             break;
-        case 6:
+        case 5:
             l.search();
             break;
-        case 7:
+        case 6:
             l.reverse();
             break;
-        case 8:
+        case 7:
             l.deleteNode();
             break;
-        case 9:
+        case 8:
             cout << "Exited the program.\n";
             break;
         default:
             cout << "Enter a valid choice.\n";
         }
 
-    } while (choice != 9);
+    } while (choice != 8);
 
     return 0;
 }
