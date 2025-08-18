@@ -63,7 +63,7 @@ myNode *myList::getNode()
             break;
         cout << "Invalid phone number.\n";
     }
-    cin.ignore();  // Clear newline from input buffer
+    cin.ignore();
 
     // Name validation
     while (true)
@@ -92,7 +92,7 @@ void myList::create()
     int n;
     cout << "Enter number of nodes to be created: ";
     cin >> n;
-    cin.ignore();  // Clear newline after reading n
+    cin.ignore();
 
     for (int i = 0; i < n; i++)
     {
@@ -123,8 +123,8 @@ void myList::insertInBetween()
 {
     string afterName;
     cout << "Insert after which name: ";
-    cin.ignore();              
-    getline(cin, afterName);   
+    cin.ignore();
+    getline(cin, afterName);
 
     myNode *p = head;
     while (p != NULL && p->name != afterName)
@@ -188,7 +188,7 @@ void myList::search()
 {
     string targetName;
     cout << "Enter name to be searched: ";
-    cin.ignore(); // Clear newline before getline
+    cin.ignore();
     getline(cin, targetName);
 
     myNode *p = head;
@@ -246,7 +246,7 @@ void myList::deleteNode()
     if (p->prev != NULL)
         p->prev->next = p->next;
     else
-        head = p->next;
+        head = p->next; // Delete head
 
     if (p->next != NULL)
         p->next->prev = p->prev;
