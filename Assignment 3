@@ -1,13 +1,15 @@
 #include <iostream>
 using namespace std;
 
-struct student {
+struct student
+{
     int rollNo;
     string name;
     float sgpa;
 };
 
-class cstudent {
+class cstudent
+{
 public:
     student s[10];
     int count = 0;
@@ -17,22 +19,27 @@ public:
     void binarySearch();
     void bubbleSort();
     void insertionSort();
-    void quickSort(); // User-facing
+    void quickSort();
+
 private:
     int partition(int l, int h);
-    void quickSortHelper(int l, int h); // Recursive helper
+    void quickSortHelper(int l, int h);
 };
 
-void cstudent::getData() {
+// Input number of students
+void cstudent::getData()
+{
     cout << "How many students do you want to enter? ";
     cin >> count;
 
-    if (count > 10) {
+    if (count > 10)
+    {
         cout << "Only 10 students allowed. Setting count to 10.\n";
         count = 10;
     }
 
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++)
+    {
         cout << "\nEnter roll number of student " << i + 1 << ": ";
         cin >> s[i].rollNo;
         cout << "Enter name of student " << i + 1 << ": ";
@@ -42,13 +49,17 @@ void cstudent::getData() {
     }
 }
 
-void cstudent::displayData() {
-    if (count == 0) {
+// Display students data
+void cstudent::displayData()
+{
+    if (count == 0)
+    {
         cout << "No student data to display.\n";
         return;
     }
 
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++)
+    {
         cout << "\nStudent " << i + 1 << ":\n";
         cout << "Roll No: " << s[i].rollNo << endl;
         cout << "Name   : " << s[i].name << endl;
@@ -57,8 +68,10 @@ void cstudent::displayData() {
 }
 
 // Linear Search by SGPA
-void cstudent::linearSearch() {
-    if (count == 0) {
+void cstudent::linearSearch()
+{
+    if (count == 0)
+    {
         cout << "No student data available\n";
         return;
     }
@@ -68,8 +81,10 @@ void cstudent::linearSearch() {
     cin >> key;
 
     int flag = 0;
-    for (int i = 0; i < count; i++) {
-        if (s[i].sgpa == key) {
+    for (int i = 0; i < count; i++)
+    {
+        if (s[i].sgpa == key)
+        {
             cout << "\nStudent Found:\n";
             cout << "Roll No: " << s[i].rollNo << endl;
             cout << "Name   : " << s[i].name << endl;
@@ -78,14 +93,16 @@ void cstudent::linearSearch() {
         }
     }
 
-    if (!flag) {
+    if (!flag)
+    {
         cout << "No student found with SGPA " << key << endl;
     }
 }
 
 // Binary Search by name
-void cstudent::binarySearch() {
-    insertionSort(); // Ensure data is sorted by name
+void cstudent::binarySearch()
+{
+    insertionSort();
 
     string key;
     cout << "Enter name to be searched: ";
@@ -95,33 +112,44 @@ void cstudent::binarySearch() {
     int end = count - 1;
     int flag = 0;
 
-    while (start <= end) {
+    while (start <= end)
+    {
         int mid = (start + end) / 2;
 
-        if (s[mid].name == key) {
+        if (s[mid].name == key)
+        {
             cout << "\nStudent Found:\n";
             cout << "Roll No: " << s[mid].rollNo << endl;
             cout << "Name   : " << s[mid].name << endl;
             cout << "SGPA   : " << s[mid].sgpa << endl;
             flag = 1;
             break;
-        } else if (key < s[mid].name) {
+        }
+        else if (key < s[mid].name)
+        {
             end = mid - 1;
-        } else {
+        }
+        else
+        {
             start = mid + 1;
         }
     }
 
-    if (!flag) {
+    if (!flag)
+    {
         cout << "No student found with name " << key << endl;
     }
 }
 
 // Bubble Sort by Roll Number
-void cstudent::bubbleSort() {
-    for (int i = 0; i < count - 1; i++) {
-        for (int j = 0; j < count - i - 1; j++) {
-            if (s[j].rollNo > s[j + 1].rollNo) {
+void cstudent::bubbleSort()
+{
+    for (int i = 0; i < count - 1; i++)
+    {
+        for (int j = 0; j < count - i - 1; j++)
+        {
+            if (s[j].rollNo > s[j + 1].rollNo)
+            {
                 swap(s[j], s[j + 1]);
             }
         }
@@ -130,28 +158,35 @@ void cstudent::bubbleSort() {
 }
 
 // Insertion Sort by Name
-void cstudent::insertionSort() {
-    for (int i = 1; i < count; i++) {
+void cstudent::insertionSort()
+{
+    for (int i = 1; i < count; i++)
+    {
         student key = s[i];
         int j = i - 1;
-        while (j >= 0 && s[j].name > key.name) {
+        while (j >= 0 && s[j].name > key.name)
+        {
             s[j + 1] = s[j];
             j--;
         }
         s[j + 1] = key;
     }
-    displayData();
+   
 }
 
 // Partition for Quick Sort (SGPA Descending)
-int cstudent::partition(int l, int h) {
+int cstudent::partition(int l, int h)
+{
     float pivot = s[l].sgpa;
     int i = l;
     int j = h;
 
-    while (i < j) {
-        while (s[i].sgpa >= pivot && i < h) i++;
-        while (s[j].sgpa < pivot) j--;
+    while (i < j)
+    {
+        while (s[i].sgpa >= pivot && i < h)
+            i++;
+        while (s[j].sgpa < pivot)
+            j--;
         if (i < j)
             swap(s[i], s[j]);
     }
@@ -160,26 +195,30 @@ int cstudent::partition(int l, int h) {
 }
 
 // Recursive Quick Sort
-void cstudent::quickSortHelper(int l, int h) {
-    if (l < h) {
+void cstudent::quickSortHelper(int l, int h)
+{
+    if (l < h)
+    {
         int p = partition(l, h);
         quickSortHelper(l, p - 1);
         quickSortHelper(p + 1, h);
     }
 }
 
-// User-callable Quick Sort
-void cstudent::quickSort() {
+void cstudent::quickSort()
+{
     quickSortHelper(0, count - 1);
     cout << "\nStudents sorted by SGPA (Descending):\n";
     displayData();
 }
 
-int main() {
+int main()
+{
     int choice;
     cstudent c;
 
-    do {
+    do
+    {
         cout << "\n--- MENU ---\n";
         cout << "1. Enter student data\n";
         cout << "2. Display student data \n";
@@ -192,7 +231,8 @@ int main() {
         cout << "Enter your choice: ";
         cin >> choice;
 
-        switch (choice) {
+        switch (choice)
+        {
         case 1:
             c.getData();
             break;
@@ -210,6 +250,7 @@ int main() {
             break;
         case 6:
             c.insertionSort();
+            c.displayData();
             break;
         case 7:
             c.quickSort();
