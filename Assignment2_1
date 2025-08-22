@@ -1,0 +1,148 @@
+// Use of SLL as stack to make task management system
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct myNode {
+    string task;
+    myNode *next;
+};
+
+class myStack {
+    myNode *top;
+
+public:
+    myStack();
+    myNode *getNode();
+    bool isEmpty();
+    void create();
+    void push();
+    void pop();
+    void peek();
+    void display();
+    void undo();
+    void redo();
+};
+
+// Constructor
+myStack::myStack() {
+    top = NULL;
+}
+
+// Create and return a new node
+myNode *myStack::getNode() {
+    myNode *t = new myNode;
+    cout << "Enter task: ";
+    cin >> t->task;
+    t->next = NULL;
+    return t;
+}
+
+bool myStack::isEmpty() {
+    return top == NULL;
+}
+
+// Create multiple tasks
+void myStack::create() {
+    int n;
+    cout << "Enter number of tasks to be inserted: ";
+    cin >> n;
+    
+    for (int i = 0; i < n; i++) {
+        myNode *t = getNode();
+        t->next = top;
+        top = t;
+    }
+}
+
+// Push a new task
+void myStack::push() {
+    myNode *t = getNode();
+    t->next = top;
+    top = t;
+}
+
+// Pop the top task
+void myStack::pop() {
+    if (isEmpty()) {
+        cout << "Stack is empty .\n";
+        return;
+    }
+
+    myNode *p = top;
+    cout << "Deleted task: " << p->task << "\n";
+    top = top->next;
+    delete p;
+}
+
+// Peek at the top task
+void myStack::peek() {
+    if (!isEmpty()) {
+        cout << "Top task: " << top->task << endl;
+    } else {
+        cout << "Stack is empty\n";
+    }
+}
+
+void myStack::display() {
+    if (!isEmpty()) {
+        
+    } else {
+        cout << "Stack is empty\n";
+    }
+}
+
+
+void myStack::undo() {
+
+    cout << "Undo\n";
+}
+
+void myStack::redo() {
+    cout << "Redo\n";
+}
+
+
+int main() {
+    myStack s;
+    int choice;
+    s.create();
+
+    do {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Add task\n";
+        cout << "2. Delete task\n";
+        cout << "3. See topmost task\n";
+        cout << "4. Undo\n";
+        cout << "5. Redo\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            s.push();
+            break;
+        case 2:
+            s.pop();
+            break;
+        case 3:
+            s.peek();
+            break;
+        case 4:
+            s.undo();
+            break;
+        case 5:
+            s.redo();
+            break;
+        case 6:
+            cout << "Exited the program.\n";
+            break;
+        default:
+            cout << "Enter a valid choice.\n";
+        }
+
+    } while (choice != 6);
+
+    return 0;
+}
