@@ -1,0 +1,201 @@
+// Use of SLL as queue to make myNode management system considering data, weight and priority using enum
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Enum for task priority
+enum Priority
+{
+    LOW,
+    MED,
+    HIGH
+};
+
+struct myNode
+{
+    string title;
+    float weight;
+    int difficulty; // 1 = Easy, 2 = Medium, 3 = Hard
+    Priority priority;
+    myNode *next;
+};
+
+class myQueue
+{
+    myNode *front;
+    myNode *rear;
+
+public:
+    myQueue();
+    myNode *getNode();
+    bool isEmpty();
+    void create();
+    void enqueue();
+    void dequeue();
+    void peek();
+    void display();
+};
+
+// Constructor
+myQueue::myQueue()
+{
+    front = NULL;
+    rear = NULL;
+}
+
+// Create and return new node
+myNode *myQueue::getNode()
+{
+    myNode *t = new myNode;
+
+    cout << "Enter task title: ";
+    cin >> t->title;
+    cout << "Enter weight: ";
+    cin >> t->weight;
+    cout << "Enter difficulty (1=Easy, 2=Medium, 3=Hard): ";
+    cin >> t->difficulty;
+    int p;
+    cout << "Enter priority (0=Low, 1=Med, 2=High): ";
+    cin >> p;
+    t->priority = static_cast<Priority>(p); // convert int → enum
+
+    t->next = NULL;
+    return t;
+}
+
+// Check if queue is empty
+bool myQueue::isEmpty()
+{
+    return front == NULL;
+}
+
+// Create multiple tasks
+void myQueue::create()
+{
+    int n;
+    cout << "Enter number of tasks to insert: ";
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        enqueue();
+    }
+}
+
+// Enqueue a new task
+void myQueue::enqueue()
+{
+    myNode *t = getNode();
+    if (rear == NULL)
+    {
+        front = rear = t;
+    }
+    else
+    {
+        rear->next = t;
+        rear = t;
+    }
+    cout << "Task \"" << t->title << "\" added to queue.\n";
+}
+
+// Dequeue (remove from front)
+void myQueue::dequeue()
+{
+    if (isEmpty())
+    {
+        cout << "Queue is empty.\n";
+        return;
+    }
+    myNode *t = front;
+    cout << "Deleted task: " << t->title << "\n";
+    front = front->next;
+    if (front == NULL)
+        rear = NULL;
+    delete t;
+}
+
+// Peek (front element)
+void myQueue::peek()
+{
+    if (!isEmpty())
+    {
+        cout << "Front task → " << front->title
+             << " | Weight: " << front->weight
+             << " | Difficulty: " << (front->difficulty == 1 ? "Easy" : front->difficulty == 2 ? "Medium"
+                                                                                               : "Hard")
+             << " | Priority: " << (front->priority == LOW ? "Low" : front->priority == MED ? "Medium"
+                                                                                            : "High")
+             << endl;
+    }
+    else
+    {
+        cout << "Queue is empty.\n";
+    }
+}
+
+// Display all tasks
+void myQueue::display()
+{
+    if (isEmpty())
+    {
+        cout << "Queue is empty.\n";
+        return;
+    }
+    cout << "\n--- Task Queue ---\n";
+    myNode *curr = front;
+    while (curr != NULL)
+    {
+        cout << "Title: " << curr->title
+             << " | Weight: " << curr->weight
+             << " | Difficulty: " << (curr->difficulty == 1 ? "Easy" : curr->difficulty == 2 ? "Medium"
+                                                                                             : "Hard")
+             << " | Priority: " << (curr->priority == LOW ? "Low" : curr->priority == MED ? "Medium"
+                                                                                          : "High")
+             << endl;
+        curr = curr->next;
+    }
+}
+
+int main()
+{
+    myQueue q;
+    int choice;
+
+    q.create();
+
+    do
+    {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Add task\n";
+        cout << "2. Delete task\n";
+        cout << "3. See front task\n";
+        cout << "4. Display all tasks\n";
+        cout << "5. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            q.enqueue();
+            break;
+        case 2:
+            q.dequeue();
+            break;
+        case 3:
+            q.peek();
+            break;
+        case 4:
+            q.display();
+            break;
+        case 5:
+            cout << "Exited program.\n";
+            break;
+        default:
+            cout << "Invalid choice.\n";
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
