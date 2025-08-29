@@ -16,7 +16,7 @@ struct myNode
 {
     string title;
     float weight;
-    int difficulty; // 1 = Easy, 2 = Medium, 3 = Hard
+    int time;
     Priority priority;
     myNode *next;
 };
@@ -53,12 +53,12 @@ myNode *myQueue::getNode()
     cin >> t->title;
     cout << "Enter weight: ";
     cin >> t->weight;
-    cout << "Enter difficulty (1=Easy, 2=Medium, 3=Hard): ";
-    cin >> t->difficulty;
+    cout << "Enter time required in hours : ";
+    cin >> t->time;
     int p;
     cout << "Enter priority (0=Low, 1=Med, 2=High): ";
     cin >> p;
-    t->priority = static_cast<Priority>(p); // convert int → enum
+    t->priority = static_cast<Priority>(p); // convert int to enum
 
     t->next = NULL;
     return t;
@@ -82,7 +82,7 @@ void myQueue::create()
     }
 }
 
-// Enqueue a new task
+// Enqueue
 void myQueue::enqueue()
 {
     myNode *t = getNode();
@@ -98,7 +98,7 @@ void myQueue::enqueue()
     cout << "Task \"" << t->title << "\" added to queue.\n";
 }
 
-// Dequeue (remove from front)
+// Dequeue
 void myQueue::dequeue()
 {
     if (isEmpty())
@@ -121,11 +121,19 @@ void myQueue::peek()
     {
         cout << "Front task → " << front->title
              << " | Weight: " << front->weight
-             << " | Difficulty: " << (front->difficulty == 1 ? "Easy" : front->difficulty == 2 ? "Medium"
-                                                                                               : "Hard")
-             << " | Priority: " << (front->priority == LOW ? "Low" : front->priority == MED ? "Medium"
-                                                                                            : "High")
-             << endl;
+             << " | time required : " << front->time << " hours | Priority ";
+        if (front->priority == LOW)
+        {
+            cout << "Low\n";
+        }
+        else if (front->priority == MED)
+        {
+            cout << "Medium\n";
+        }
+        else
+        {
+            cout << "High\n";
+        }
     }
     else
     {
@@ -145,13 +153,21 @@ void myQueue::display()
     myNode *curr = front;
     while (curr != NULL)
     {
-        cout << "Title: " << curr->title
+        cout << "Task → " << curr->title
              << " | Weight: " << curr->weight
-             << " | Difficulty: " << (curr->difficulty == 1 ? "Easy" : curr->difficulty == 2 ? "Medium"
-                                                                                             : "Hard")
-             << " | Priority: " << (curr->priority == LOW ? "Low" : curr->priority == MED ? "Medium"
-                                                                                          : "High")
-             << endl;
+             << " | Time required: " << curr->time << " hours | Priority: ";
+        if (curr->priority == LOW)
+        {
+            cout << "Low\n";
+        }
+        else if (curr->priority == MED)
+        {
+            cout << "Medium\n";
+        }
+        else if (curr->priority == HIGH)
+        {
+            cout << "High\n";
+        }
         curr = curr->next;
     }
 }
