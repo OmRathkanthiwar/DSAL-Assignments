@@ -1,148 +1,180 @@
-// Use of SLL as stack to make task management system
 #include <iostream>
 #include <string>
 using namespace std;
 
-struct myNode {
-    string task;
-    myNode *next;
-};
-
-class myStack {
-    myNode *top;
-
+class Node
+{
 public:
-    myStack();
-    myNode *getNode();
-    bool isEmpty();
-    void create();
-    void push();
-    void pop();
-    void peek();
-    void display();
-    void undo();
-    void redo();
+    string content;
+    Node *next;
+
+    Node()
+    {
+        next = NULL;
+    }
 };
 
-// Constructor
-myStack::myStack() {
-    top = NULL;
-}
+class stack
+{
+public:
+    Node *top;
 
-// Create and return a new node
-myNode *myStack::getNode() {
-    myNode *t = new myNode;
-    cout << "Enter task: ";
-    cin >> t->task;
-    t->next = NULL;
-    return t;
-}
-
-bool myStack::isEmpty() {
-    return top == NULL;
-}
-
-// Create multiple tasks
-void myStack::create() {
-    int n;
-    cout << "Enter number of tasks to be inserted: ";
-    cin >> n;
-    
-    for (int i = 0; i < n; i++) {
-        myNode *t = getNode();
-        t->next = top;
-        top = t;
-    }
-}
-
-// Push a new task
-void myStack::push() {
-    myNode *t = getNode();
-    t->next = top;
-    top = t;
-}
-
-// Pop the top task
-void myStack::pop() {
-    if (isEmpty()) {
-        cout << "Stack is empty .\n";
-        return;
+    stack()
+    {
+        top = NULL;
     }
 
-    myNode *p = top;
-    cout << "Deleted task: " << p->task << "\n";
-    top = top->next;
-    delete p;
-}
-
-// Peek at the top task
-void myStack::peek() {
-    if (!isEmpty()) {
-        cout << "Top task: " << top->task << endl;
-    } else {
-        cout << "Stack is empty\n";
+    bool IsEmpty()
+    {
+        return top == NULL;
     }
-}
 
-void myStack::display() {
-    if (!isEmpty()) {
-        
-    } else {
-        cout << "Stack is empty\n";
+    void push(string value)
+    {
+        Node *New = new Node;
+        New->content = value;
+        New->next = top;
+        top = New;
     }
-}
 
-
-void myStack::undo() {
-
-    cout << "Undo\n";
-}
-
-void myStack::redo() {
-    cout << "Redo\n";
-}
-
-
-int main() {
-    myStack s;
-    int choice;
-    s.create();
-
-    do {
-        cout << "\n--- MENU ---\n";
-        cout << "1. Add task\n";
-        cout << "2. Delete task\n";
-        cout << "3. See topmost task\n";
-        cout << "4. Undo\n";
-        cout << "5. Redo\n";
-        cout << "6. Exit\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-
-        switch (choice) {
-        case 1:
-            s.push();
-            break;
-        case 2:
-            s.pop();
-            break;
-        case 3:
-            s.peek();
-            break;
-        case 4:
-            s.undo();
-            break;
-        case 5:
-            s.redo();
-            break;
-        case 6:
-            cout << "Exited the program.\n";
-            break;
-        default:
-            cout << "Enter a valid choice.\n";
+    string pop()
+    {
+        if (IsEmpty())
+        {
+            return "";
         }
+        Node *temp = top;
+        string val = temp->content;
+        top = top->next;
+        delete temp;
+        return val;
+    }
 
-    } while (choice != 6);
+    string peek()
+    {
+        if (IsEmpty())
+        {
+            return "";
+        }
+        else
+        {
+            return top->content;
+        }
+    }
+
+    void clear()
+    {
+        while (!IsEmpty())
+        {
+            pop();
+        }
+    }
+};
+
+class Texteditor
+{
+public:
+    stack undocontent;
+    stack redocontent;
+    string text = "";
+
+    void type(string content)
+    {
+        undocontent.push(content);
+        if (!text.empty())
+            text += " ";
+        text += content;
+        redocontent.clear();
+    }
+
+    void undo()
+    {
+        if (!undocontent.IsEmpty())
+        {
+            string last = undocontent.pop();
+            redocontent.push(last);
+            if (text.size() >= last.size())
+            {
+                if (text.size() > last.size() && text[text.size() - last.size() - 1] == ' ')
+                    text.erase(text.size() - last.size() - 1);
+                else
+                    text.erase(text.size() - last.size());
+            }
+        }
+        else
+        {
+            cout << "Nothing to undo!" << endl;
+        }
+    }
+
+    void redo()
+    {
+        if (!redocontent.IsEmpty())
+        {
+            string last = redocontent.pop();
+            undocontent.push(last);
+            if (!text.empty())
+                text += " ";
+            text += last;
+        }
+        else
+        {
+            cout << "Nothing to redo" << endl;
+        }
+    }
+
+    void show()
+    {
+        cout << "\nCurrent text : " << text << endl;
+    }
+};
+
+int main()
+{
+    Texteditor editor;
+    int choice;
+    string word;
+
+    do
+    {
+        cout << "\n--- Text Editor Menu ---";
+        cout << "\n1. Type Text";
+        cout << "\n2. Undo";
+        cout << "\n3. Redo";
+        cout << "\n4. Show Text";
+        cout << "\n5. Exit";
+        cout << "\nEnter choice: ";
+        cin >> choice;
+        cin.ignore();
+
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter text: ";
+            getline(cin, word);
+            editor.type(word);
+            break;
+
+        case 2:
+            editor.undo();
+            break;
+
+        case 3:
+            editor.redo();
+            break;
+
+        case 4:
+            editor.show();
+            break;
+
+        case 5:
+            cout << "Exiting program...." << endl;
+            break;
+
+        default:
+            cout << "Invalid choice" << endl;
+        }
+    } while (choice != 5);
 
     return 0;
 }
