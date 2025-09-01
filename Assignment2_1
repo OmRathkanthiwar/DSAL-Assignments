@@ -2,179 +2,243 @@
 #include <string>
 using namespace std;
 
-class Node
+struct myNode
 {
-public:
-    string content;
-    Node *next;
-
-    Node()
-    {
-        next = NULL;
-    }
+    string data;
+    myNode *next;
 };
 
-class stack
+class myStack
 {
-public:
-    Node *top;
+    myNode *head;      // main stack
+    myNode *undoStack; // stack for undo (stores deleted data)
+    myNode *redoStack; // stack for redo (stores undone data)
 
-    stack()
+    // Functions for undo and redo stacks
+    void pushUndoStack(string data) 
     {
-        top = NULL;
+        myNode *t = new myNode;
+        t->data = data;
+        t->next = undoStack;
+        undoStack = t;
     }
 
-    bool IsEmpty()
+    string popUndoStack()
     {
-        return top == NULL;
-    }
-
-    void push(string value)
-    {
-        Node *New = new Node;
-        New->content = value;
-        New->next = top;
-        top = New;
-    }
-
-    string pop()
-    {
-        if (IsEmpty())
-        {
+        if (!undoStack)
             return "";
-        }
-        Node *temp = top;
-        string val = temp->content;
-        top = top->next;
-        delete temp;
-        return val;
+        myNode *t = undoStack;
+        string data = t->data;
+        undoStack = undoStack->next;
+        delete t;
+        return data;
     }
 
-    string peek()
+    void pushRedoStack(string data) 
     {
-        if (IsEmpty())
-        {
+        myNode *t = new myNode;
+        t->data = data;
+        t->next = redoStack;
+        redoStack = t;
+    }
+
+    string popRedoStack()
+    {
+        if (!redoStack)
             return "";
-        }
-        else
-        {
-            return top->content;
-        }
+        myNode *t = redoStack;
+        string data = t->data;
+        redoStack = redoStack->next;
+        delete t;
+        return data;
     }
 
-    void clear()
+    void clearRedoStack()
     {
-        while (!IsEmpty())
+        while (redoStack)
         {
-            pop();
+            myNode *t = redoStack;
+            redoStack = redoStack->next;
+            delete t;
         }
     }
-};
 
-class Texteditor
-{
 public:
-    stack undocontent;
-    stack redocontent;
-    string text = "";
-
-    void type(string content)
-    {
-        undocontent.push(content);
-        if (!text.empty())
-            text += " ";
-        text += content;
-        redocontent.clear();
-    }
-
-    void undo()
-    {
-        if (!undocontent.IsEmpty())
-        {
-            string last = undocontent.pop();
-            redocontent.push(last);
-            if (text.size() >= last.size())
-            {
-                if (text.size() > last.size() && text[text.size() - last.size() - 1] == ' ')
-                    text.erase(text.size() - last.size() - 1);
-                else
-                    text.erase(text.size() - last.size());
-            }
-        }
-        else
-        {
-            cout << "Nothing to undo!" << endl;
-        }
-    }
-
-    void redo()
-    {
-        if (!redocontent.IsEmpty())
-        {
-            string last = redocontent.pop();
-            undocontent.push(last);
-            if (!text.empty())
-                text += " ";
-            text += last;
-        }
-        else
-        {
-            cout << "Nothing to redo" << endl;
-        }
-    }
-
-    void show()
-    {
-        cout << "\nCurrent text : " << text << endl;
-    }
+    myStack();
+    ~myStack();
+    void push();
+    void deleteNode();
+    void peek();
+    void undo();
+    void redo();
+    void display();
 };
+
+myNode *getNode()
+{
+    myNode *t = new myNode;
+    cout << "Enter your data: ";
+    cin.ignore();
+    getline(cin, t->data);
+    t->next = NULL;
+    return t;
+}
+
+myStack::myStack()
+{
+    head = NULL;
+    undoStack = NULL;
+    redoStack = NULL;
+}
+
+myStack::~myStack()
+{
+    // delete main stack
+    while (head)
+    {
+        myNode *p = head->next;
+        delete head;
+        head = p;
+    }
+    // delete undo stack
+    while (undoStack)
+    {
+        myNode *p = undoStack->next;
+        delete undoStack;
+        undoStack = p;
+    }
+    // delete redo stack
+    while (redoStack)
+    {
+        myNode *p = redoStack->next;
+        delete redoStack;
+        redoStack = p;
+    }
+}
+
+void myStack::push()
+{
+    myNode *t = getNode();
+    t->next = head;
+    head = t;
+    clearRedoStack(); // new push disables redo
+}
+
+void myStack::deleteNode()
+{
+    if (!head)
+    {
+        cout << "Your list is empty\n";
+        return;
+    }
+    myNode *p = head;
+    pushUndoStack(head->data); // save deleted item for undo
+    head = head->next;
+    delete p;
+    clearRedoStack(); // delete disables redo until undo
+}
+
+void myStack::peek()
+{
+    if (!head)
+    {
+        cout << "Your list is empty\n";
+        return;
+    }
+    cout << "Top element: " << head->data << endl;
+}
+
+void myStack::undo()
+{
+    string data = popUndoStack();
+    if (data == "")
+    {
+        cout << "Nothing to undo.\n";
+        return;
+    }
+    myNode *t = new myNode{data, head};
+    head = t;
+    pushRedoStack(data); // save for redo
+}
+
+void myStack::redo()
+{
+    string data = popRedoStack();
+    if (data == "")
+    {
+        cout << "Nothing to redo.\n";
+        return;
+    }
+    // Redo means remove the node we added by undo, so delete from head
+    if (!head)
+    {
+        cout << "Stack is empty, cannot redo.\n";
+        return;
+    }
+    myNode *p = head;
+    if (head->data == data)
+    {
+        head = head->next;
+        delete p;
+        pushUndoStack(data); // save back to undo stack
+    }
+}
+
+void myStack::display()
+{
+    if (!head)
+    {
+        cout << "Stack is empty\n";
+        return;
+    }
+    myNode *p = head;
+    cout << "Stack contents:\n";
+    while (p)
+    {
+        cout << p->data << endl;
+        p = p->next;
+    }
+}
 
 int main()
 {
-    Texteditor editor;
+    myStack s;
     int choice;
-    string word;
 
-    do
+    while (true)
     {
-        cout << "\n--- Text Editor Menu ---";
-        cout << "\n1. Type Text";
-        cout << "\n2. Undo";
-        cout << "\n3. Redo";
-        cout << "\n4. Show Text";
-        cout << "\n5. Exit";
-        cout << "\nEnter choice: ";
+        cout << "\n1.Push\n2.Delete\n3.Peek\n4.Undo\n5.Redo\n6.Display\n7.Quit\n";
+        cout << "Enter your choice: ";
         cin >> choice;
-        cin.ignore();
 
         switch (choice)
         {
         case 1:
-            cout << "Enter text: ";
-            getline(cin, word);
-            editor.type(word);
+            s.push();
             break;
-
         case 2:
-            editor.undo();
+            s.deleteNode();
+            s.peek();
             break;
-
         case 3:
-            editor.redo();
+            s.peek();
             break;
-
         case 4:
-            editor.show();
+            s.undo();
+            s.peek();
             break;
-
         case 5:
-            cout << "Exiting program...." << endl;
+            s.redo();
+            s.peek();
             break;
-
+        case 6:
+            s.display();
+            break;
+        case 7:
+            cout << "Exiting program.\n";
+            return 0;
         default:
-            cout << "Invalid choice" << endl;
+            cout << "Invalid choice.\n";
         }
-    } while (choice != 5);
-
-    return 0;
+    }
 }
