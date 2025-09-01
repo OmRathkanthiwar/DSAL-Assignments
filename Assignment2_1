@@ -32,7 +32,7 @@ public:
     void display();
 };
 
-myNode *getNode()  
+myNode *getNode()
 {
     myNode *t = new myNode;
     cout << "Enter your data: ";
@@ -130,20 +130,6 @@ void myStack::push()
     clearRedoStack(); // new push disables redo
 }
 
-void myStack::deleteNode()
-{
-    if (!head)
-    {
-        cout << "Your list is empty\n";
-        return;
-    }
-    myNode *p = head;
-    pushUndoStack(head->data); // save deleted item for undo
-    head = head->next;
-    delete p;
-    clearRedoStack(); // delete disables redo until undo
-}
-
 void myStack::peek()
 {
     if (!head)
@@ -152,6 +138,22 @@ void myStack::peek()
         return;
     }
     cout << "Top element: " << head->data << endl;
+}
+
+void myStack::display()
+{
+    if (!head)
+    {
+        cout << "Stack is empty\n";
+        return;
+    }
+    myNode *p = head;
+    cout << "Stack contents:\n";
+    while (p)
+    {
+        cout << p->data << endl;
+        p = p->next;
+    }
 }
 
 void myStack::undo()
@@ -191,20 +193,18 @@ void myStack::redo()
     }
 }
 
-void myStack::display()
+void myStack::deleteNode()
 {
     if (!head)
     {
-        cout << "Stack is empty\n";
+        cout << "Your list is empty\n";
         return;
     }
     myNode *p = head;
-    cout << "Stack contents:\n";
-    while (p)
-    {
-        cout << p->data << endl;
-        p = p->next;
-    }
+    pushUndoStack(head->data); // save deleted item for undo
+    head = head->next;
+    delete p;
+    clearRedoStack(); // delete disables redo until undo
 }
 
 int main()
@@ -212,9 +212,16 @@ int main()
     myStack s;
     int choice;
 
-    while (true)
+    do
     {
-        cout << "\n1.Push\n2.Delete\n3.Peek\n4.Undo\n5.Redo\n6.Display\n7.Quit\n";
+        cout << "\nMenu:\n";
+        cout << " 1. Push\n";
+        cout << " 2. Peek\n";
+        cout << " 3. Display\n";
+        cout << " 4. Undo\n";
+        cout << " 5. Redo\n";
+        cout << " 6. Delete\n";
+        cout << " 7. Quit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -224,11 +231,10 @@ int main()
             s.push();
             break;
         case 2:
-            s.deleteNode();
             s.peek();
             break;
         case 3:
-            s.peek();
+            s.display();
             break;
         case 4:
             s.undo();
@@ -239,13 +245,17 @@ int main()
             s.peek();
             break;
         case 6:
-            s.display();
+            s.deleteNode();
+            s.peek();
             break;
         case 7:
             cout << "Exiting program.\n";
-            return 0;
+            break;
         default:
             cout << "Invalid choice.\n";
         }
-    }
+
+    } while (choice != 7);
+
+    return 0;
 }
