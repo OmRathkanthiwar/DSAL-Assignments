@@ -10,58 +10,16 @@ struct myNode
 
 class myStack
 {
-    myNode *head;      // main stack
+    myNode *head;
     myNode *undoStack; // stack for undo (stores deleted data)
     myNode *redoStack; // stack for redo (stores undone data)
 
     // Functions for undo and redo stacks
-    void pushUndoStack(string data) 
-    {
-        myNode *t = new myNode;
-        t->data = data;
-        t->next = undoStack;
-        undoStack = t;
-    }
-
-    string popUndoStack()
-    {
-        if (!undoStack)
-            return "";
-        myNode *t = undoStack;
-        string data = t->data;
-        undoStack = undoStack->next;
-        delete t;
-        return data;
-    }
-
-    void pushRedoStack(string data) 
-    {
-        myNode *t = new myNode;
-        t->data = data;
-        t->next = redoStack;
-        redoStack = t;
-    }
-
-    string popRedoStack()
-    {
-        if (!redoStack)
-            return "";
-        myNode *t = redoStack;
-        string data = t->data;
-        redoStack = redoStack->next;
-        delete t;
-        return data;
-    }
-
-    void clearRedoStack()
-    {
-        while (redoStack)
-        {
-            myNode *t = redoStack;
-            redoStack = redoStack->next;
-            delete t;
-        }
-    }
+    void pushUndoStack(string data);
+    string popUndoStack();
+    void pushRedoStack(string data);
+    string popRedoStack();
+    void clearRedoStack();
 
 public:
     myStack();
@@ -74,15 +32,7 @@ public:
     void display();
 };
 
-myNode *getNode()
-{
-    myNode *t = new myNode;
-    cout << "Enter your data: ";
-    cin.ignore();
-    getline(cin, t->data);
-    t->next = NULL;
-    return t;
-}
+myNode *getNode();
 
 myStack::myStack()
 {
@@ -113,6 +63,54 @@ myStack::~myStack()
         myNode *p = redoStack->next;
         delete redoStack;
         redoStack = p;
+    }
+}
+
+void myStack::pushUndoStack(string data)
+{
+    myNode *t = new myNode;
+    t->data = data;
+    t->next = undoStack;
+    undoStack = t;
+}
+
+string myStack::popUndoStack()
+{
+    if (!undoStack)
+        return "";
+    myNode *t = undoStack;
+    string data = t->data;
+    undoStack = undoStack->next;
+    delete t;
+    return data;
+}
+
+void myStack::pushRedoStack(string data)
+{
+    myNode *t = new myNode;
+    t->data = data;
+    t->next = redoStack;
+    redoStack = t;
+}
+
+string myStack::popRedoStack()
+{
+    if (!redoStack)
+        return "";
+    myNode *t = redoStack;
+    string data = t->data;
+    redoStack = redoStack->next;
+    delete t;
+    return data;
+}
+
+void myStack::clearRedoStack()
+{
+    while (redoStack)
+    {
+        myNode *t = redoStack;
+        redoStack = redoStack->next;
+        delete t;
     }
 }
 
@@ -169,7 +167,6 @@ void myStack::redo()
         cout << "Nothing to redo.\n";
         return;
     }
-    // Redo means remove the node we added by undo, so delete from head
     if (!head)
     {
         cout << "Stack is empty, cannot redo.\n";
@@ -198,6 +195,16 @@ void myStack::display()
         cout << p->data << endl;
         p = p->next;
     }
+}
+
+myNode *getNode()
+{
+    myNode *t = new myNode;
+    cout << "Enter your data: ";
+    cin.ignore();
+    getline(cin, t->data);
+    t->next = NULL;
+    return t;
 }
 
 int main()
