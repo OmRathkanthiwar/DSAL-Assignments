@@ -1,158 +1,217 @@
+// Use of SLL as queue to make myNode management system considering data, weight and priority using enum
+
 #include <iostream>
 #include <string>
 using namespace std;
-typedef struct Mnode
-{ // the data that list will contain.
-    string data;
-    Mnode *next;
-} Mnode;
-Mnode *getNode()
+
+// Enum for task priority
+enum Priority
 {
-    Mnode *t;
-    t = new Mnode;
-    cout << "Enter your data" << endl;
-    cin >> t->data;
+    LOW,
+    MED,
+    HIGH
+};
+
+struct myNode
+{
+    string title;
+    float weight;
+    int time;
+    Priority priority;
+    myNode *next;
+};
+
+class myQueue
+{
+    myNode *front;
+    myNode *rear;
+
+public:
+    myQueue();
+    myNode *getNode();
+    bool isEmpty();
+    void create();
+    void enqueue();
+    void dequeue();
+    void peek();
+    void display();
+};
+
+// Constructor
+myQueue::myQueue()
+{
+    front = NULL;
+    rear = NULL;
+}
+
+// Create and return new node
+myNode *myQueue::getNode()
+{
+    myNode *t = new myNode;
+
+    cout << "Enter task title: ";
+    cin >> t->title;
+    cout << "Enter weight: ";
+    cin >> t->weight;
+    cout << "Enter time required in hours : ";
+    cin >> t->time;
+    int p;
+    cout << "Enter priority (0=Low, 1=Med, 2=High): ";
+    cin >> p;
+    t->priority = static_cast<Priority>(p); // convert int to enum
+
     t->next = NULL;
     return t;
 }
-class Mylist
+
+// Check if queue is empty
+bool myQueue::isEmpty()
 {
-    Mnode *head;
-    string prev{"\0"};
+    return front == NULL;
+}
 
-public:
-    bool flag = false;
-    Mylist()
+// Create multiple tasks
+void myQueue::create()
+{
+    int n;
+    cout << "Enter number of tasks to insert: ";
+    cin >> n;
+    for (int i = 0; i < n; i++)
     {
-        head = NULL; // its important to point head to null when you have not created list yet.
+        enqueue();
     }
+}
 
-    ~Mylist()
+// Enqueue
+void myQueue::enqueue()
+{
+    myNode *t = getNode();
+    if (rear == NULL)
     {
-        while (head != NULL)
+        front = rear = t;
+    }
+    else
+    {
+        rear->next = t;
+        rear = t;
+    }
+    cout << "Task \"" << t->title << "\" added to queue.\n";
+}
+
+// Dequeue
+void myQueue::dequeue()
+{
+    if (isEmpty())
+    {
+        cout << "Queue is empty.\n";
+        return;
+    }
+    myNode *t = front;
+    cout << "Deleted task: " << t->title << "\n";
+    front = front->next;
+    if (front == NULL)
+        rear = NULL;
+    delete t;
+}
+
+// Peek (front element)
+void myQueue::peek()
+{
+    if (!isEmpty())
+    {
+        cout << "Front task → " << front->title
+             << " | Weight: " << front->weight
+             << " | time required : " << front->time << " hours | Priority ";
+        if (front->priority == LOW)
         {
-            Mnode *p = head->next;
-            free(head);
-            head = p;
+            cout << "Low\n";
         }
-    }
-
-    void insertB()
-    {
-        Mnode *t;
-        t = getNode();
-        if (head == NULL)
+        else if (front->priority == MED)
         {
-            head = t;
+            cout << "Medium\n";
         }
         else
         {
-            t->next = head;
-            head = t;
+            cout << "High\n";
         }
     }
-
-    void deleteN()
+    else
     {
-        Mnode *temp = head;
-        if (head == NULL)
-        {
-            cout << "Your list is empty" << endl;
-        }
-        else
-        {
-            Mnode *p = head;
-            prev = head->data;
-            head = p->next;
-            delete p;
-        }
+        cout << "Queue is empty.\n";
     }
+}
 
-    void display_top()
+// Display all tasks
+void myQueue::display()
+{
+    if (isEmpty())
     {
-        if (head == NULL)
+        cout << "Queue is empty.\n";
+        return;
+    }
+    cout << "\n--- Task Queue ---\n";
+    myNode *curr = front;
+    while (curr != NULL)
+    {
+        cout << "Task → " << curr->title
+             << " | Weight: " << curr->weight
+             << " | Time required: " << curr->time << " hours | Priority: ";
+        if (curr->priority == LOW)
         {
-            cout << "Your list is emty" << endl;
+            cout << "Low\n";
         }
-        else
+        else if (curr->priority == MED)
         {
-            cout << "Your top element is: ";
-            cout << head->data << endl;
+            cout << "Medium\n";
         }
-    }
-
-    void undo()
-    {
-        Mnode *temp;
-        temp = new Mnode;
-        temp->data = prev;
-        temp->next = head;
-        head = temp;
-    }
-
-    void redo()
-    {
-        if (flag == true)
+        else if (curr->priority == HIGH)
         {
-            deleteN();
+            cout << "High\n";
         }
+        curr = curr->next;
     }
+}
 
-    void display_Complete()
-    {
-        Mnode *p;
-        p = head; // we create dummy pointer because we cant loose our head if we loose our head we will loose our complete list.
-        while (p != NULL)
-        { // if you take condition as p->next!=0 it will not print last number or data you stored.
-            cout << p->data << " " << endl;
-            ;
-            p = p->next;
-        }
-    }
-};
 int main()
 {
-    Mylist s;
-    Mnode *t = NULL;
-    s.flag = false;
-    while (true)
+    myQueue q;
+    int choice;
+
+    q.create();
+
+    do
     {
-        int choice;
-        cout << "1.Insert\n2.Delete\n3.Display_top\n4.undo\n5.redo\n6.display_complete_stack\n7.quit" << endl;
-        cout << "Enter your choice: ";
+        cout << "\n--- MENU ---\n";
+        cout << "1. Add task\n";
+        cout << "2. Delete task\n";
+        cout << "3. See front task\n";
+        cout << "4. Display all tasks\n";
+        cout << "5. Exit\n";
+        cout << "Enter choice: ";
         cin >> choice;
+
         switch (choice)
         {
         case 1:
-            s.insertB();
+            q.enqueue();
             break;
         case 2:
-            s.deleteN();
-            s.display_top();
+            q.dequeue();
             break;
         case 3:
-            s.display_top();
+            q.peek();
             break;
         case 4:
-            s.undo();
-            s.flag = true;   // flag = false → No undo has been done yet.
-            s.display_top(); // flag = true → Undo was done, so redo is allowed.
+            q.display();
             break;
         case 5:
-            s.redo();
-            s.flag = false;
-            s.display_top();
+            cout << "Exited program.\n";
             break;
-        case 6:
-            s.display_Complete();
-            break;
-        case 7:
-            cout << "Program is ending....." << endl;
-            return 0;
         default:
-            cout << "Enter a correct choice" << endl;
-            break;
+            cout << "Invalid choice.\n";
         }
-    }
+
+    } while (choice != 5);
+
     return 0;
 }
