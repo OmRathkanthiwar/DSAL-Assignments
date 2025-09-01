@@ -32,7 +32,15 @@ public:
     void display();
 };
 
-myNode *getNode();
+myNode *getNode()  
+{
+    myNode *t = new myNode;
+    cout << "Enter your data: ";
+    cin.ignore();
+    getline(cin, t->data);
+    t->next = NULL;
+    return t;
+}
 
 myStack::myStack()
 {
@@ -154,7 +162,9 @@ void myStack::undo()
         cout << "Nothing to undo.\n";
         return;
     }
-    myNode *t = new myNode{data, head};
+    myNode *t = new myNode;
+    t->data = data;
+    t->next = head;
     head = t;
     pushRedoStack(data); // save for redo
 }
@@ -195,16 +205,6 @@ void myStack::display()
         cout << p->data << endl;
         p = p->next;
     }
-}
-
-myNode *getNode()
-{
-    myNode *t = new myNode;
-    cout << "Enter your data: ";
-    cin.ignore();
-    getline(cin, t->data);
-    t->next = NULL;
-    return t;
 }
 
 int main()
