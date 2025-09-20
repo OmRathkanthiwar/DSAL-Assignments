@@ -1,0 +1,229 @@
+#include <iostream>
+using namespace std;
+
+#define MAX 10
+
+class Deque
+{
+private:
+    int arr[MAX];
+    int front, rear;
+
+public:
+    Deque();
+    bool isFull();
+    bool isEmpty();
+    void insertFront(int x);
+    void insertRear(int x);
+    void deleteFront();
+    void deleteRear();
+    void getFront();
+    void getRear();
+    void display();
+};
+
+// Constructor
+Deque::Deque()
+{
+    front = -1;
+    rear = -1;
+}
+
+bool Deque::isFull()
+{
+    return ((front == 0 && rear == MAX - 1) || (front == rear + 1));
+}
+
+bool Deque::isEmpty()
+{
+    return (front == -1);
+}
+
+void Deque::insertFront(int x)
+{
+    if (isFull())
+    {
+        cout << "Overflow! Cannot insert at front." << endl;
+        return;
+    }
+    if (isEmpty())
+    {
+        front = rear = 0;
+    }
+    else if (front == 0)
+    {
+        front = MAX - 1;
+    }
+    else
+    {
+        front = front - 1;
+    }
+    arr[front] = x;
+    cout << x << " inserted at front." << endl;
+}
+
+void Deque::insertRear(int x)
+{
+    if (isFull())
+    {
+        cout << "Overflow! Cannot insert at rear." << endl;
+        return;
+    }
+    if (isEmpty())
+    {
+        front = rear = 0;
+    }
+    else if (rear == MAX - 1)
+    {
+        rear = 0;
+    }
+    else
+    {
+        rear = rear + 1;
+    }
+    arr[rear] = x;
+    cout << x << " inserted at rear." << endl;
+}
+
+void Deque::deleteFront()
+{
+    if (isEmpty())
+    {
+        cout << "Underflow! Cannot delete from front." << endl;
+        return;
+    }
+    cout << arr[front] << " deleted from front." << endl;
+
+    if (front == rear)
+    {
+        front = rear = -1;
+    }
+    else if (front == MAX - 1)
+    {
+        front = 0;
+    }
+    else
+    {
+        front = front + 1;
+    }
+}
+
+void Deque::deleteRear()
+{
+    if (isEmpty())
+    {
+        cout << "Underflow! Cannot delete from rear." << endl;
+        return;
+    }
+    cout << arr[rear] << " deleted from rear." << endl;
+
+    if (front == rear)
+    {
+        front = rear = -1;
+    }
+    else if (rear == 0)
+    {
+        rear = MAX - 1;
+    }
+    else
+    {
+        rear = rear - 1;
+    }
+}
+
+void Deque::getFront()
+{
+    if (isEmpty())
+    {
+        cout << "Deque is empty." << endl;
+        return;
+    }
+    cout << "Front element: " << arr[front] << endl;
+}
+
+void Deque::getRear()
+{
+    if (isEmpty())
+    {
+        cout << "Deque is empty." << endl;
+        return;
+    }
+    cout << "Rear element: " << arr[rear] << endl;
+}
+
+void Deque::display()
+{
+    if (isEmpty())
+    {
+        cout << "Deque is empty." << endl;
+        return;
+    }
+    cout << "Deque elements: ";
+    int i = front;
+    while (true)
+    {
+        cout << arr[i] << " ";
+        if (i == rear)
+            break;
+        i = (i + 1) % MAX;
+    }
+    cout << endl;
+}
+
+int main()
+{
+    Deque dq;
+    int choice, value;
+
+    do
+    {
+        cout << endl;
+        cout << "------ DEQUE MENU ------" << endl;
+        cout << "1. Insert Front" << endl;
+        cout << "2. Insert Rear" << endl;
+        cout << "3. Delete Front" << endl;
+        cout << "4. Delete Rear" << endl;
+        cout << "5. Get Front" << endl;
+        cout << "6. Get Rear" << endl;
+        cout << "7. Display" << endl;
+        cout << "8. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter value: ";
+            cin >> value;
+            dq.insertFront(value);
+            break;
+        case 2:
+            cout << "Enter value: ";
+            cin >> value;
+            dq.insertRear(value);
+            break;
+        case 3:
+            dq.deleteFront();
+            break;
+        case 4:
+            dq.deleteRear();
+            break;
+        case 5:
+            dq.getFront();
+            break;
+        case 6:
+            dq.getRear();
+            break;
+        case 7:
+            dq.display();
+            break;
+        case 8:
+            cout << "Exiting program..." << endl;
+            break;
+        default:
+            cout << "Invalid choice!" << endl;
+        }
+    } while (choice != 8);
+
+    return 0;
+}
