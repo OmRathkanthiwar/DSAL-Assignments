@@ -11,8 +11,8 @@ struct myNode
 class myStack
 {
     myNode *head;
-    myNode *undoStack; // stack for undo (stores deleted data)
-    myNode *redoStack; // stack for redo (stores undone data)
+    myNode *undoStack; // stack for undo
+    myNode *redoStack; // stack for redo
 
     // Functions for undo and redo stacks
     void pushUndoStack(string data);
@@ -25,11 +25,11 @@ public:
     myStack();
     ~myStack();
     void push();
-    void deleteNode();
     void peek();
+    void display();
     void undo();
     void redo();
-    void display();
+    void deleteNode();
 };
 
 myNode *getNode()
