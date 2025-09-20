@@ -25,7 +25,7 @@ bool isOperator(char c)
     return (c == '+' || c == '-' || c == '*' || c == '/' || c == '^');
 }
 
-// Infix to Postfix Conversion with Parenthesis Matching Check
+// Infix to Postfix Conversion
 string infixToPostfix(string infix)
 {
     stack<char> s;
@@ -192,7 +192,7 @@ int evaluatePostfix(string postfix)
             {
                 s.push(val);
             }
-            catch (bad_alloc &)
+            catch (...)
             {
                 cout << "Error: Memory not available" << endl;
                 return 0;
@@ -268,7 +268,7 @@ int evaluatePrefix(string prefix)
             {
                 s.push(val);
             }
-            catch (bad_alloc &)
+            catch (...)
             {
                 cout << "Error: Memory not available" << endl;
                 return 0;
