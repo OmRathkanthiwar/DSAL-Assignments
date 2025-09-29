@@ -1,0 +1,114 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+const int TABLE_SIZE = 10;
+
+struct Node
+{
+    string username;
+    string password;
+    Node *next;
+};
+
+class Chaining
+{
+    Node *table[TABLE_SIZE];
+
+public:
+    Chaining();
+    int hashFunction(string name);
+    void insert();
+    void display();
+};
+
+Chaining::Chaining()
+{
+    for (int i = 0; i < TABLE_SIZE; i++)
+        table[i] = NULL;
+}
+
+int Chaining::hashFunction(string name)
+{
+    int sum = 0;
+    for (int i = 0; i < name.length(); i++)
+        sum += name[i];
+    return sum % TABLE_SIZE;
+}
+
+void Chaining::insert()
+{
+    string name, pass;
+    cout << "Enter username: ";
+    cin >> name;
+    cout << "Enter password: ";
+    cin >> pass;
+
+    int index = hashFunction(name);
+    Node *newNode = new Node;
+    newNode->username = name;
+    newNode->password = pass;
+    newNode->next = NULL;
+
+    if (table[index] == NULL)
+    {
+        table[index] = newNode;
+    }
+    else
+    {
+        Node *temp = table[index];
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+}
+
+void Chaining::display()
+{
+    cout << "\n--- Hash Table ---\n";
+    for (int i = 0; i < TABLE_SIZE; i++)
+    {
+        cout << i << ": ";
+        Node *temp = table[i];
+        while (temp != NULL)
+        {
+            cout << "[" << temp->username << " : " << temp->password << "] -> ";
+            temp = temp->next;
+        }
+        cout << "NULL\n";
+    }
+}
+
+int main()
+{
+    Chaining c;
+    int choice;
+    do
+    {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Insert User\n";
+        cout << "2. Display Table\n";
+        cout << "3. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            c.insert();
+            break;
+        case 2:
+            c.display();
+            break;
+        case 3:
+            cout << "Exited\n";
+            break;
+        default:
+            cout << "Invalid choice!\n";
+        }
+    } while (choice != 3);
+
+    return 0;
+}
