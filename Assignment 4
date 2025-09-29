@@ -188,15 +188,7 @@ int evaluatePostfix(string postfix)
             int val;
             cin >> val;
 
-            try
-            {
-                s.push(val);
-            }
-            catch (...)
-            {
-                cout << "Error: Memory not available" << endl;
-                return 0;
-            }
+            s.push(val);
         }
         else if (isOperator(ch))
         {
@@ -264,15 +256,7 @@ int evaluatePrefix(string prefix)
             int val;
             cin >> val;
 
-            try
-            {
-                s.push(val);
-            }
-            catch (...)
-            {
-                cout << "Error: Memory not available" << endl;
-                return 0;
-            }
+            s.push(val);
         }
         else if (isOperator(ch))
         {
