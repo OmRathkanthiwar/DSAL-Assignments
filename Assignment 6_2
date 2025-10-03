@@ -1,1 +1,116 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+const int TABLE_SIZE = 10;
+
+struct Node
+{
+    string username;
+    string password;
+    bool occupied;
+};
+
+class OpenAddressing
+{
+    Node table[TABLE_SIZE];
+
+public:
+    OpenAddressing();
+    int hashFunction(string name);
+    void insert();
+    void display();
+};
+
+OpenAddressing::OpenAddressing()
+{
+    for (int i = 0; i < TABLE_SIZE; i++)
+    {
+        table[i].username = "";
+        table[i].password = "";
+        table[i].occupied = false;
+    }
+}
+
+int OpenAddressing::hashFunction(string name)
+{
+    int sum = 0;
+    for (int i = 0; i < name.length(); i++)
+        sum += name[i];
+    return sum % TABLE_SIZE;
+}
+
+void OpenAddressing::insert()
+{
+    string name, pass;
+    cout << "Enter username: ";
+    cin >> name;
+    cout << "Enter password: ";
+    cin >> pass;
+
+    int index = hashFunction(name);
+    int start = index;
+
+    while (table[index].occupied)
+    {
+        index = (index + 1) % TABLE_SIZE;
+        if (index == start)
+        {
+            cout << "Hash Table is Full!\n";
+            return;
+        }
+    }
+
+    table[index].username = name;
+    table[index].password = pass;
+    table[index].occupied = true;
+
+    cout << "User inserted at index " << index << endl;
+}
+
+void OpenAddressing::display()
+{
+    cout << "\n--- Hash Table ---\n";
+    for (int i = 0; i < TABLE_SIZE; i++)
+    {
+        cout << i << ": ";
+        if (table[i].occupied)
+            cout << "[" << table[i].username << " : " << table[i].password << "]";
+        else
+            cout << "EMPTY";
+        cout << endl;
+    }
+}
+
+int main()
+{
+    OpenAddressing oa;
+    int choice;
+    do
+    {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Insert User\n";
+        cout << "2. Display Table\n";
+        cout << "3. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            oa.insert();
+            break;
+        case 2:
+            oa.display();
+            break;
+        case 3:
+            cout << "Exited\n";
+            break;
+        default:
+            cout << "Invalid choice!\n";
+        }
+    } while (choice != 3);
+
+    return 0;
+}
 
