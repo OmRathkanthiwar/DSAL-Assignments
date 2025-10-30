@@ -1,0 +1,218 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Student {
+    int rollNo;
+    string name, division, address;
+
+public:
+    void getData() {
+        cout << "Enter Roll No: ";
+        cin >> rollNo;
+        cin.ignore();
+        cout << "Enter Name: ";
+        getline(cin, name);
+        cout << "Enter Division: ";
+        getline(cin, division);
+        cout << "Enter Address: ";
+        getline(cin, address);
+    }
+
+    void displayData() {
+        cout << "\nRoll No: " << rollNo
+             << "\nName: " << name
+             << "\nDivision: " << division
+             << "\nAddress: " << address << endl;
+    }
+
+    int getRollNo() { return rollNo; }
+
+    string toFileString() {
+        return to_string(rollNo) + "," + name + "," + division + "," + address + "\n";
+    }
+
+    void fromFileString(string line) {
+        size_t pos = 0;
+        string token;
+        int field = 0;
+        while ((pos = line.find(',')) != string::npos) {
+            token = line.substr(0, pos);
+            if (field == 0)
+                rollNo = stoi(token);
+            else if (field == 1)
+                name = token;
+            else if (field == 2)
+                division = token;
+            line.erase(0, pos + 1);
+            field++;
+        }
+        address = line;
+    }
+};
+
+// --------------------------------------------------
+// Create file
+// --------------------------------------------------
+void createFile() {
+    ofstream fout("StudentData.txt");
+    if (!fout) {
+        cout << "Error opening file!\n";
+        return;
+    }
+
+    int n;
+    cout << "Enter number of students: ";
+    cin >> n;
+    cin.ignore();
+
+    Student s;
+    for (int i = 0; i < n; i++) {
+        cout << "\nEnter details for student " << i + 1 << ":\n";
+        s.getData();
+        fout << s.toFileString();
+    }
+
+    fout.close();
+    cout << "\nFile created successfully.\n";
+}
+
+// --------------------------------------------------
+// Display all records
+// --------------------------------------------------
+void displayFile() {
+    ifstream fin("StudentData.txt");
+    if (!fin) {
+        cout << "File not found!\n";
+        return;
+    }
+
+    string line;
+    Student s;
+    cout << "\n--- Student Records ---\n";
+    while (getline(fin, line)) {
+        if (line.empty()) continue;
+        s.fromFileString(line);
+        s.displayData();
+    }
+    fin.close();
+}
+
+// --------------------------------------------------
+// Search record
+// --------------------------------------------------
+void searchRecord() {
+    ifstream fin("StudentData.txt");
+    if (!fin) {
+        cout << "File not found!\n";
+        return;
+    }
+
+    int roll;
+    cout << "Enter Roll No to search: ";
+    cin >> roll;
+
+    string line;
+    Student s;
+    bool found = false;
+
+    while (getline(fin, line)) {
+        if (line.empty()) continue;
+        s.fromFileString(line);
+        if (s.getRollNo() == roll) {
+            cout << "\nRecord Found:\n";
+            s.displayData();
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) cout << "\nRecord not found.\n";
+    fin.close();
+}
+
+// --------------------------------------------------
+// Delete record
+// --------------------------------------------------
+void deleteRecord() {
+    ifstream fin("StudentData.txt");
+    ofstream fout("Temp.txt");
+    if (!fin || !fout) {
+        cout << "File error!\n";
+        return;
+    }
+
+    int roll;
+    cout << "Enter Roll No to delete: ";
+    cin >> roll;
+
+    string line;
+    Student s;
+    bool found = false;
+
+    while (getline(fin, line)) {
+        if (line.empty()) continue;
+        s.fromFileString(line);
+        if (s.getRollNo() == roll) {
+            found = true;
+            continue; // skip this record
+        }
+        fout << s.toFileString();
+    }
+
+    fin.close();
+    fout.close();
+    remove("StudentData.txt");
+    rename("Temp.txt", "StudentData.txt");
+
+    if (found)
+        cout << "\nRecord deleted successfully.\n";
+    else
+        cout << "\nRecord not found.\n";
+}
+
+// --------------------------------------------------
+// Add record
+// --------------------------------------------------
+void addRecord() {
+    ofstream fout("StudentData.txt", ios::app);
+    if (!fout) {
+        cout << "File not found!\n";
+        return;
+    }
+
+    Student s;
+    cout << "\nEnter new student details:\n";
+    cin.ignore();
+    s.getData();
+    fout << s.toFileString();
+
+    fout.close();
+    cout << "\nRecord added successfully.\n";
+}
+
+// --------------------------------------------------
+// Main Menu
+// --------------------------------------------------
+int main() {
+    int choice;
+    do {
+        cout << "\n--- STUDENT DATABASE MENU ---\n";
+        cout << "1. Create File\n2. Display All\n3. Add Record\n4. Search Record\n5. Delete Record\n6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: createFile(); break;
+            case 2: displayFile(); break;
+            case 3: addRecord(); break;
+            case 4: searchRecord(); break;
+            case 5: deleteRecord(); break;
+            case 6: cout << "\nExiting...\n"; break;
+            default: cout << "\nInvalid choice!\n";
+        }
+    } while (choice != 6);
+
+    return 0;
+}
