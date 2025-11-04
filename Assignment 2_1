@@ -1,3 +1,6 @@
+// Undo/Redo Functionality (Stack): Implementing an undo/redo
+feature in text editors or design software using a last-in, first-out (LIFO)
+approach.
 #include <iostream>
 #include <string>
 using namespace std;
