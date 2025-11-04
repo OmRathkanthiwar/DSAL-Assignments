@@ -133,3 +133,51 @@ int main()
 
     return 0;
 }
+
+/*
+Output :
+--- MENU ---
+1. Insert User
+2. Display Table
+3. Exit
+Enter choice: 1
+Enter username: om
+Enter password: om123
+User inserted at index 0
+
+--- MENU ---
+1. Insert User
+2. Display Table
+3. Exit
+Enter choice: 1
+Enter username: shreyas
+Enter password: shreyas123
+User inserted at index 7
+
+--- MENU ---
+1. Insert User
+2. Display Table
+3. Exit
+Enter choice: 1
+Enter username: yash
+Enter password: yash123
+User inserted at index 8
+
+--- MENU ---
+1. Insert User
+2. Display Table
+3. Exit
+Enter choice: 2
+
+--- Hash Table ---
+0: [om : 70]
+1: EMPTY
+2: EMPTY
+3: EMPTY
+4: EMPTY
+5: EMPTY
+6: EMPTY
+7: [shreyas : 17]
+8: [yash : 87]
+9: EMPTY
+*/
