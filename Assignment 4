@@ -402,3 +402,68 @@ int main()
 
     return 0;
 }
+
+/*
+Output :
+--- Infix to Postfix/Prefix Converter & Evaluator ---
+1. Enter Infix Expression
+2. Convert Infix to Postfix
+3. Convert Infix to Prefix
+4. Evaluate Postfix Expression
+5. Evaluate Prefix Expression
+0. Exit
+Enter your choice: 1
+Enter infix expression (e.g., (A+B)*(C-D)): (A+B)*(C-D)
+Expression stored successfully.
+
+--- Infix to Postfix/Prefix Converter & Evaluator ---
+1. Enter Infix Expression
+2. Convert Infix to Postfix
+3. Convert Infix to Prefix
+4. Evaluate Postfix Expression
+5. Evaluate Prefix Expression
+0. Exit
+Enter your choice: 2
+Postfix Expression: AB+CD-*
+
+--- Infix to Postfix/Prefix Converter & Evaluator ---
+1. Enter Infix Expression
+2. Convert Infix to Postfix
+3. Convert Infix to Prefix
+4. Evaluate Postfix Expression
+5. Evaluate Prefix Expression
+0. Exit
+Enter your choice: 3
+Prefix Expression: *+AB-CD
+
+--- Infix to Postfix/Prefix Converter & Evaluator ---
+1. Enter Infix Expression
+2. Convert Infix to Postfix
+3. Convert Infix to Prefix
+4. Evaluate Postfix Expression
+5. Evaluate Prefix Expression
+0. Exit
+Enter your choice: 4
+Evaluating Postfix Expression:
+Enter value of A: 1
+Enter value of B: 2
+Enter value of C: 3
+Enter value of D: 4
+Result: -3
+
+--- Infix to Postfix/Prefix Converter & Evaluator ---
+1. Enter Infix Expression
+2. Convert Infix to Postfix
+3. Convert Infix to Prefix
+4. Evaluate Postfix Expression
+5. Evaluate Prefix Expression
+0. Exit
+Enter your choice: 5
+Evaluating Prefix Expression:
+Enter value of D: 1
+Enter value of C: 
+2
+Enter value of B: 3
+Enter value of A: 4
+Result: 7
+*/
