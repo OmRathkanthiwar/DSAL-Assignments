@@ -1,3 +1,11 @@
+/*
+Develop a hashing-based system for securely storing user credentials,
+where usernames act as keys and hashed passwords as values.
+Implement and demonstrate collision handling using:
+• Open Addressing (Linear or Quadratic Probing without
+chaining)
+*/
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -7,7 +15,7 @@ const int TABLE_SIZE = 10;
 struct Node
 {
     string username;
-    string password;
+    string password; // hashed password
     bool occupied;
 };
 
@@ -18,6 +26,7 @@ class OpenAddressing
 public:
     OpenAddressing();
     int hashFunction(string name);
+    string hashPassword(string pass);
     void insert();
     void display();
 };
@@ -40,6 +49,14 @@ int OpenAddressing::hashFunction(string name)
     return sum % TABLE_SIZE;
 }
 
+string OpenAddressing::hashPassword(string pass)
+{
+    int sum = 0;
+    for (int i = 0; i < pass.length(); i++)
+        sum += pass[i];
+    return to_string(sum % 100); // hashed password
+}
+
 void OpenAddressing::insert()
 {
     string name, pass;
@@ -47,6 +64,9 @@ void OpenAddressing::insert()
     cin >> name;
     cout << "Enter password: ";
     cin >> pass;
+
+    // hash the password before storing
+    string hashedPass = hashPassword(pass);
 
     int index = hashFunction(name);
     int start = index;
@@ -62,7 +82,7 @@ void OpenAddressing::insert()
     }
 
     table[index].username = name;
-    table[index].password = pass;
+    table[index].password = hashedPass;
     table[index].occupied = true;
 
     cout << "User inserted at index " << index << endl;
@@ -113,4 +133,3 @@ int main()
 
     return 0;
 }
-
