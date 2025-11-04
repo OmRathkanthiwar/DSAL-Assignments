@@ -215,3 +215,74 @@ int main()
 
     return 0;
 }
+
+/*
+Output : 
+Enter number of tasks to insert: 2
+Enter task title: eat
+Enter weight: 3
+Enter time required in hours : 2
+Enter priority (0=Low, 1=Med, 2=High): 0
+Task "eat" added to queue.
+Enter task title: sleep
+Enter weight: 6
+Enter time required in hours : 8
+Enter priority (0=Low, 1=Med, 2=High): 1
+Task "sleep" added to queue.
+
+--- MENU ---
+1. Add task
+2. Delete task
+3. See front task
+4. Display all tasks
+5. Exit
+Enter choice: 1
+Enter task title: code
+Enter weight: 9
+Enter time required in hours : 6
+Enter priority (0=Low, 1=Med, 2=High): 2
+Task "code" added to queue.
+
+--- MENU ---
+1. Add task
+2. Delete task
+3. See front task
+4. Display all tasks
+5. Exit
+Enter choice: 3
+Front task → eat | Weight: 3 | time required : 2 hours | Priority Low
+
+--- MENU ---
+1. Add task
+2. Delete task
+3. See front task
+4. Display all tasks
+5. Exit
+Enter choice: 4
+
+--- Task Queue ---
+Task → eat | Weight: 3 | Time required: 2 hours | Priority: Low
+Task → sleep | Weight: 6 | Time required: 8 hours | Priority: Medium
+Task → code | Weight: 9 | Time required: 6 hours | Priority: High
+
+--- MENU ---
+1. Add task
+2. Delete task
+3. See front task
+4. Display all tasks
+5. Exit
+Enter choice: 2
+Deleted task: eat
+
+--- MENU ---
+1. Add task
+2. Delete task
+3. See front task
+4. Display all tasks
+5. Exit
+Enter choice: 4
+
+--- Task Queue ---
+Task → sleep | Weight: 6 | Time required: 8 hours | Priority: Medium
+Task → code | Weight: 9 | Time required: 6 hours | Priority: High
+*/
