@@ -280,3 +280,170 @@ int main()
 
     return 0;
 }
+
+/*
+Output :
+--- MENU ---
+1. Enter student data
+2. Display student data 
+3. Search student by SGPA
+4. Search student by name
+5. Sort students according to their roll number
+6. Sort students according to their name
+7. Sort students by SGPA (Descending)
+8. Exit
+Enter your choice: 1
+How many students do you want to enter? 3
+
+Enter roll number of student 1: 1
+Enter name of student 1: om
+Enter SGPA of om: 9.2
+
+Enter roll number of student 2: 2
+Enter name of student 2: prashant
+Enter SGPA of prashant: 9.4
+
+Enter roll number of student 3: 3
+Enter name of student 3: sanket
+Enter SGPA of sanket: 9
+
+--- MENU ---
+1. Enter student data
+2. Display student data 
+3. Search student by SGPA
+4. Search student by name
+5. Sort students according to their roll number
+6. Sort students according to their name
+7. Sort students by SGPA (Descending)
+8. Exit
+Enter your choice: 2
+
+Student 1:
+Roll No: 1
+Name   : om
+SGPA   : 9.2
+
+Student 2:
+Roll No: 2
+Name   : prashant
+SGPA   : 9.4
+
+Student 3:
+Roll No: 3
+Name   : sanket
+SGPA   : 9
+
+--- MENU ---
+1. Enter student data
+2. Display student data 
+3. Search student by SGPA
+4. Search student by name
+5. Sort students according to their roll number
+6. Sort students according to their name
+7. Sort students by SGPA (Descending)
+8. Exit
+Enter your choice: 3
+Enter SGPA to search: 9.2
+
+Student Found:
+Roll No: 1
+Name   : om
+SGPA   : 9.2
+
+--- MENU ---
+1. Enter student data
+2. Display student data 
+3. Search student by SGPA
+4. Search student by name
+5. Sort students according to their roll number
+6. Sort students according to their name
+7. Sort students by SGPA (Descending)
+8. Exit
+Enter your choice: 4
+Enter name to be searched: sanket
+
+Student Found:
+Roll No: 3
+Name   : sanket
+SGPA   : 9
+
+--- MENU ---
+1. Enter student data
+2. Display student data 
+3. Search student by SGPA
+4. Search student by name
+5. Sort students according to their roll number
+6. Sort students according to their name
+7. Sort students by SGPA (Descending)
+8. Exit
+Enter your choice: 5
+
+Student 1:
+Roll No: 1
+Name   : om
+SGPA   : 9.2
+
+Student 2:
+Roll No: 2
+Name   : prashant
+SGPA   : 9.4
+
+Student 3:
+Roll No: 3
+Name   : sanket
+SGPA   : 9
+
+--- MENU ---
+1. Enter student data
+2. Display student data 
+3. Search student by SGPA
+4. Search student by name
+5. Sort students according to their roll number
+6. Sort students according to their name
+7. Sort students by SGPA (Descending)
+8. Exit
+Enter your choice: 6
+
+Student 1:
+Roll No: 1
+Name   : om
+SGPA   : 9.2
+
+Student 2:
+Roll No: 2
+Name   : prashant
+SGPA   : 9.4
+
+Student 3:
+Roll No: 3
+Name   : sanket
+SGPA   : 9
+
+--- MENU ---
+1. Enter student data
+2. Display student data 
+3. Search student by SGPA
+4. Search student by name
+5. Sort students according to their roll number
+6. Sort students according to their name
+7. Sort students by SGPA (Descending)
+8. Exit
+Enter your choice: 7
+
+Students sorted by SGPA (Descending):
+
+Student 1:
+Roll No: 2
+Name   : prashant
+SGPA   : 9.4
+
+Student 2:
+Roll No: 1
+Name   : om
+SGPA   : 9.2
+
+Student 3:
+Roll No: 3
+Name   : sanket
+SGPA   : 9
+*/
