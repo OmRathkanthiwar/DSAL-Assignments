@@ -1,3 +1,14 @@
+/*
+File Handling
+The department maintains student’s database. The file contains roll
+number, name, division and address. Write a program to create a
+sequential file to store and maintain student data. It should allow the user
+to add, delete information about students. Display information of a
+particular student. If the record of the student does not exist an
+appropriate message is displayed. If a student record is found it should
+display the student details.
+*/
+
 #include <fstream>
 #include <iostream>
 #include <string>
