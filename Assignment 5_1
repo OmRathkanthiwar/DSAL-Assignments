@@ -149,3 +149,67 @@ int main()
 
     return 0;
 }
+
+/*
+Output :
+--- Hospital ---
+1. Insert
+2. Remove Highest Priority Patient
+3. Display Patients
+4. Exit
+Enter choice: 1
+Enter name: atharva
+Enter priority (1 = OPD, 2 = Accident, 3 = Emergency): 1
+atharva added successfully!
+
+--- Hospital ---
+1. Insert
+2. Remove Highest Priority Patient
+3. Display Patients
+4. Exit
+Enter choice: 1
+Enter name: nishant
+Enter priority (1 = OPD, 2 = Accident, 3 = Emergency): 2
+nishant added successfully!
+
+--- Hospital ---
+1. Insert
+2. Remove Highest Priority Patient
+3. Display Patients
+4. Exit
+Enter choice: 1
+Enter name: shreyas
+Enter priority (1 = OPD, 2 = Accident, 3 = Emergency): 3
+shreyas added successfully!
+
+--- Hospital ---
+1. Insert
+2. Remove Highest Priority Patient
+3. Display Patients
+4. Exit
+Enter choice: 3
+
+--- Current Patients ---
+1. shreyas (Priority 3)
+2. nishant (Priority 2)
+3. atharva (Priority 1)
+
+--- Hospital ---
+1. Insert
+2. Remove Highest Priority Patient
+3. Display Patients
+4. Exit
+Enter choice: 2
+Removed patient: shreyas (Priority 3)
+
+--- Hospital ---
+1. Insert
+2. Remove Highest Priority Patient
+3. Display Patients
+4. Exit
+Enter choice: 3
+
+--- Current Patients ---
+1. nishant (Priority 2)
+2. atharva (Priority 1)
+*/
