@@ -223,3 +223,81 @@ int main()
     } while (choice != 7);
     return 0;
 }
+
+/*
+Output :
+--- MENU ---
+1. Create file
+2. Add member in file
+3. Display
+4. Search
+5. Clear
+6. Modify
+7. Exit
+Enter choice: 1
+
+--- MENU ---
+1. Create file
+2. Add member in file
+3. Display
+4. Search
+5. Clear
+6. Modify
+7. Exit
+Enter choice: 2
+Enter name: om
+Enter roll no: 1
+Enter marks: 99
+
+--- MENU ---
+1. Create file
+2. Add member in file
+3. Display
+4. Search
+5. Clear
+6. Modify
+7. Exit
+Enter choice: 3
+Sr.No.  Name            Roll no.        Marks
+1       om              1               99
+
+--- MENU ---
+1. Create file
+2. Add member in file
+3. Display
+4. Search
+5. Clear
+6. Modify
+7. Exit
+Enter choice: 2
+Enter name: nishant
+Enter roll no: 2
+Enter marks: 98
+
+--- MENU ---
+1. Create file
+2. Add member in file
+3. Display
+4. Search
+5. Clear
+6. Modify
+7. Exit
+Enter choice: 6
+Enter roll number to modify: 2
+Enter new name: shreyas
+Enter new marks: 100
+Record modified successfully.
+
+--- MENU ---
+1. Create file
+2. Add member in file
+3. Display
+4. Search
+5. Clear
+6. Modify
+7. Exit
+Enter choice: 3
+Sr.No.  Name            Roll no.        Marks
+1       om              1               99
+2       shreyas         2               100
+*/
