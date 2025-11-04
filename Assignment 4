@@ -1,3 +1,11 @@
+/*
+Stack Application
+Conversion and Evaluation of Expressions
+• Implement a program to convert an infix expression to prefix
+and postfix notation.
+• Evaluate both prefix and postfix expressions.
+Use STL for implementation
+*/
 #include <iostream>
 #include <stack>
 #include <string>
