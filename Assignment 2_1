@@ -260,3 +260,137 @@ int main()
 
     return 0;
 }
+
+/*
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 1
+Enter your data: eat
+
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 1
+Enter your data: sleep
+
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 1
+Enter your data: code
+
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 2
+Top element: code
+
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 3
+Stack contents:
+code
+sleep
+eat
+
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 6
+Top element: sleep
+
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 3
+Stack contents:
+sleep
+eat
+
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 4
+Top element: code
+
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 3
+Stack contents:
+code
+sleep
+eat
+
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 5
+Top element: sleep
+
+Menu:
+ 1. Push
+ 2. Peek
+ 3. Display
+ 4. Undo
+ 5. Redo
+ 6. Delete
+ 7. Quit
+Enter your choice: 3
+Stack contents:
+sleep
+eat
+*/
+
