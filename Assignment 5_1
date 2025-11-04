@@ -1,3 +1,10 @@
+/*
+Implementation of a Priority Queue
+• Develop a priority queue where elements are dequeued based P: F–LTL–UG /03/R0
+on priority rather than insertion order.
+• Support operations such as insertion, deletion, and display
+*/
+
 #include <iostream>
 using namespace std;
 
