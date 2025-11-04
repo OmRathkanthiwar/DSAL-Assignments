@@ -235,3 +235,104 @@ int main()
 
     return 0;
 }
+
+/*
+Output :
+------ DEQUE MENU ------
+1. Insert Front
+2. Insert Rear
+3. Delete Front
+4. Delete Rear
+5. Get Front
+6. Get Rear
+7. Display
+8. Exit
+Enter your choice: 1
+Enter value: 4
+4 inserted at front.
+
+------ DEQUE MENU ------
+1. Insert Front
+2. Insert Rear
+3. Delete Front
+4. Delete Rear
+5. Get Front
+6. Get Rear
+7. Display
+8. Exit
+Enter your choice: 2
+Enter value: 3
+3 inserted at rear.
+
+------ DEQUE MENU ------
+1. Insert Front
+2. Insert Rear
+3. Delete Front
+4. Delete Rear
+5. Get Front
+6. Get Rear
+7. Display
+8. Exit
+Enter your choice: 5
+Front element: 4
+
+------ DEQUE MENU ------
+1. Insert Front
+2. Insert Rear
+3. Delete Front
+4. Delete Rear
+5. Get Front
+6. Get Rear
+7. Display
+8. Exit
+Enter your choice: 6
+Rear element: 3
+
+------ DEQUE MENU ------
+1. Insert Front
+2. Insert Rear
+3. Delete Front
+4. Delete Rear
+5. Get Front
+6. Get Rear
+7. Display
+8. Exit
+Enter your choice: 7
+Deque elements: 4 3 
+
+------ DEQUE MENU ------
+1. Insert Front
+2. Insert Rear
+3. Delete Front
+4. Delete Rear
+5. Get Front
+6. Get Rear
+7. Display
+8. Exit
+Enter your choice: 3
+4 deleted from front.
+
+------ DEQUE MENU ------
+1. Insert Front
+2. Insert Rear
+3. Delete Front
+4. Delete Rear
+5. Get Front
+6. Get Rear
+7. Display
+8. Exit
+Enter your choice: 4
+3 deleted from rear.
+
+------ DEQUE MENU ------
+1. Insert Front
+2. Insert Rear
+3. Delete Front
+4. Delete Rear
+5. Get Front
+6. Get Rear
+7. Display
+8. Exit
+Enter your choice: 7
+Deque is empty.
+*/
