@@ -294,3 +294,198 @@ int main()
 
     return 0;
 }
+
+/*
+Output :
+Enter number of nodes to be created: 3
+Enter phone number (10 digits): 9011207819
+Enter name: om
+Enter email ID: om@gmail.com
+Enter phone number (10 digits): 9822737056
+Enter name: manisha
+Enter email ID: manisha@gmail.com 
+Enter phone number (10 digits): 9767442979
+Enter name: pravin
+Enter email ID: pravin@gmail.com
+
+--- MENU ---
+1. Insert at head
+2. Insert in between
+3. Insert at tail
+4. Display
+5. Search
+6. Reverse
+7. Delete node
+8. Exit
+Enter your choice: 4
+
+--- Contact List ---
+Number : 9011207819
+Name   : om
+Email  : om@gmail.com
+
+Number : 9822737056
+Name   : manisha
+Email  : manisha@gmail.com
+
+Number : 9767442979
+Name   : pravin
+Email  : pravin@gmail.com
+
+
+--- MENU ---
+1. Insert at head
+2. Insert in between
+3. Insert at tail
+4. Display
+5. Search
+6. Reverse
+7. Delete node
+8. Exit
+Enter your choice: 5
+Enter name to be searched: om
+Contact found:
+Number: 9011207819
+Email: om@gmail.com
+
+--- MENU ---
+1. Insert at head
+2. Insert in between
+3. Insert at tail
+4. Display
+5. Search
+6. Reverse
+7. Delete node
+8. Exit
+Enter your choice: 6
+List reversed.
+
+--- Contact List ---
+Number : 9767442979
+Name   : pravin
+Email  : pravin@gmail.com
+
+Number : 9822737056
+Name   : manisha
+Email  : manisha@gmail.com
+
+Number : 9011207819
+Name   : om
+Email  : om@gmail.com
+
+
+--- MENU ---
+1. Insert at head
+2. Insert in between
+3. Insert at tail
+4. Display
+5. Search
+6. Reverse
+7. Delete node
+8. Exit
+Enter your choice: 
+7
+Enter contact number to delete: 9011207819
+Successfully deleted
+
+--- MENU ---
+1. Insert at head
+2. Insert in between
+3. Insert at tail
+4. Display
+5. Search
+6. Reverse
+7. Delete node
+8. Exit
+Enter your choice: 1
+Enter phone number (10 digits): 9011207819
+Enter name: om
+Enter email ID: om@gmail.com
+
+--- MENU ---
+1. Insert at head
+2. Insert in between
+3. Insert at tail
+4. Display
+5. Search
+6. Reverse
+7. Delete node
+8. Exit
+Enter your choice: 4
+
+--- Contact List ---
+Number : 9011207819
+Name   : om
+Email  : om@gmail.com
+
+Number : 9767442979
+Name   : pravin
+Email  : pravin@gmail.com
+
+Number : 9822737056
+Name   : manisha
+Email  : manisha@gmail.com
+
+
+--- MENU ---
+1. Insert at head
+2. Insert in between
+3. Insert at tail
+4. Display
+5. Search
+6. Reverse
+7. Delete node
+8. Exit
+Enter your choice: 2
+Insert after which name: pravin
+Enter phone number (10 digits): 2367498730
+Enter name: vibhav
+Enter email ID: vibhav@gmail.com
+Contact inserted after pravin.
+
+--- MENU ---
+1. Insert at head
+2. Insert in between
+3. Insert at tail
+4. Display
+5. Search
+6. Reverse
+7. Delete node
+8. Exit
+Enter your choice: 3
+Enter phone number (10 digits): 2398056793
+Enter name: atharva
+Enter email ID: atharva@gmail.com
+
+--- MENU ---
+1. Insert at head
+2. Insert in between
+3. Insert at tail
+4. Display
+5. Search
+6. Reverse
+7. Delete node
+8. Exit
+Enter your choice: 4
+
+--- Contact List ---
+Number : 9011207819
+Name   : om
+Email  : om@gmail.com
+
+Number : 9767442979
+Name   : pravin
+Email  : pravin@gmail.com
+
+Number : 2367498730
+Name   : vibhav
+Email  : vibhav@gmail.com
+
+Number : 9822737056
+Name   : manisha
+Email  : manisha@gmail.com
+
+Number : 2398056793
+Name   : atharva
+Email  : atharva@gmail.com
+*/
